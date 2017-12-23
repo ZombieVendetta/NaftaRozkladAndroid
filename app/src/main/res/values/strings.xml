@@ -1,0 +1,23 @@
+<resources>
+	<string name="app_name">NaftaRozklad</string>
+	
+	<string name="lbl_numerator">Чисельник</string>
+	<string name="lbl_denominator">Знаменник</string>
+
+	<string name="lbl_first_subgroup">Перша Підгрупа</string>
+	<string name="lbl_second_subgroup">Друга Підгрупа</string>
+
+	<string name="lbl_enter_group_name">Введіть назву групи</string>
+
+	<string name="lbl_no_network">Немає з\'єднання з Інтернетом</string>
+	<string name="lbl_no_data">Немає даних</string>
+	<string name="lbl_unknown_error">Невідома Помилка</string>
+	<string name="lbl_server_error">Помилка Сервера</string>
+	<string name="lbl_service_unavailable">Сервіс Недоступний</string>
+
+	<string name="lbl_monday">Понеділок</string>
+	<string name="lbl_tuesday">Вівторок</string>
+	<string name="lbl_wednesday">Середа</string>
+	<string name="lbl_thursday">Четвер</string>
+	<string name="lbl_friday">П\'ятниця</string>
+</resources>
