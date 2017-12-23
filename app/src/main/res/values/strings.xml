@@ -8,6 +8,7 @@
 	<string name="lbl_second_subgroup">Друга Підгрупа</string>
 
 	<string name="lbl_enter_group_name">Введіть назву групи</string>
+	<string name="lbl_search_title">Пошук</string>
 
 	<string name="lbl_no_network">Немає з\'єднання з Інтернетом</string>
 	<string name="lbl_no_data">Немає даних</string>
