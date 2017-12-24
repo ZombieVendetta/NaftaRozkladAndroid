@@ -42,6 +42,6 @@ class SchedulePresenter @Inject constructor(
 	}
 
 	private fun initList() = with(scheduleView) {
-		setListItems(lessonsUseCase.getLessons(getGroupId(), getWeekId(), getSubgroupId()))
+		setLessons(lessonsUseCase.getLessons(getGroupId(), getWeekId(), getSubgroupId()))
 	}
 }
