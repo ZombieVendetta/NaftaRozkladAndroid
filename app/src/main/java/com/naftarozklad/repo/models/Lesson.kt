@@ -34,6 +34,8 @@ class Lesson {
 
 	var teacher: String? = null
 
+	var room: String? = null
+
 	//region Generated
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
