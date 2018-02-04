@@ -11,7 +11,8 @@ class SchedulePresenter @Inject constructor(
 		private val lessonsUseCase: LessonsUseCase,
 		private val groupsUseCase: GroupsUseCase,
 		private val synchronizeLessonsUseCase: SynchronizeLessonsUseCase,
-		private val initCacheUseCase: InitCacheUseCase
+		private val initCacheUseCase: InitCacheUseCase,
+		private val sessionUseCase: SessionUseCase
 ) : Presenter<ScheduleView> {
 
 	lateinit var scheduleView: ScheduleView
@@ -28,6 +29,17 @@ class SchedulePresenter @Inject constructor(
 		}
 
 		scheduleView.setGroupName(groupsUseCase.getGroupById(scheduleView.getGroupId())?.name)
+		scheduleView.setSubgroupId(sessionUseCase.getCurrentSubgroupId())
+		scheduleView.setWeekId(sessionUseCase.getCurrentWeekId())
+
+		scheduleView.setSubgroupChangedAction { subgroupId ->
+			sessionUseCase.setCurrentSubgroupId(subgroupId)
+			initList()
+		}
+		scheduleView.setWeekChangedAction { weekId ->
+			sessionUseCase.setCurrentWeekId(weekId)
+			initList()
+		}
 
 		if (lessonsUseCase.isLessonsExist(scheduleView.getGroupId()))
 			initList()

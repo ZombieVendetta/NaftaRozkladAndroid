@@ -12,9 +12,9 @@ interface ScheduleView : View {
 
 	fun getGroupId(): Int
 
-	fun getWeekId(): Int
-
 	fun getSubgroupId(): Int
+
+	fun getWeekId(): Int
 
 	fun onError(errorMessage: String)
 
@@ -23,4 +23,12 @@ interface ScheduleView : View {
 	fun setRefreshAction(action : () -> Unit)
 
 	fun setGroupName(name: String?)
+
+	fun setSubgroupId(subgroupId: Int)
+
+	fun setWeekId(weekId: Int)
+
+	fun setSubgroupChangedAction(action: (subgroupId: Int) -> Unit)
+
+	fun setWeekChangedAction(action: (weekId: Int) -> Unit)
 }

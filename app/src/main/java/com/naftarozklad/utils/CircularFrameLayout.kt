@@ -20,10 +20,9 @@ class CircularFrameLayout @JvmOverloads constructor(
 		context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-	var animationDuration = 300L
-
 	private var animator: ValueAnimator? = null
 
+	var animationDuration = 300L
 	var circleCenterX = 0f
 	var circleCenterY = 0f
 
@@ -92,6 +91,8 @@ class CircularFrameLayout @JvmOverloads constructor(
 				}
 				.apply { start() }
 	}
+
+	fun isAnimating() = animator != null
 
 	private fun calculateCircleRadius(centerX: Float, centerY: Float): Float {
 		val hypotenuse = { x: Float, y: Float -> sqrt(x.pow(2) + y.pow(2)) }

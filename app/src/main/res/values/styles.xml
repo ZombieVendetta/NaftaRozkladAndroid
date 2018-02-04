@@ -9,4 +9,9 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<style name="ColoredButton" parent="ThemeOverlay.AppCompat.Light"/>
+
+	<style name="ColoredButton.Primary">
+		<item name="colorAccent">?colorPrimary</item>
+	</style>
 </resources>
