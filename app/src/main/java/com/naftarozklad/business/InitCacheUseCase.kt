@@ -2,6 +2,7 @@ package com.naftarozklad.business
 
 import com.naftarozklad.repo.internal.GlobalCache
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
 /**
@@ -12,7 +13,10 @@ class InitCacheUseCase @Inject constructor(private val globalCache: GlobalCache)
 
 	fun isGroupsExist() = !globalCache.cachedGroups.isEmpty()
 
-	fun initInternalRepo() = doAsync {
+	fun isInitialized() = globalCache.isInitialized()
+
+	fun initInternalRepo(callback: () -> Unit) = doAsync {
 		globalCache.initDatabase()
+		uiThread { callback() }
 	}
 }

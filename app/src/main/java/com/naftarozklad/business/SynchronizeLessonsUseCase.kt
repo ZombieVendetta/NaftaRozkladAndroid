@@ -40,8 +40,7 @@ class SynchronizeLessonsUseCase @Inject constructor(
 			return@doAsync
 		}
 
-		var body = result.body()
-		lessons.addAll(body?.flatMap { day-> day.lessons.toList().onEach { lesson -> lesson.day = day.day } })
+		lessons.addAll(result.body()?.flatMap { day -> day.lessons.toList().onEach { lesson -> lesson.day = day.day } })
 
 		result = webApi.getSchedule(groupId = groupId, week = Week.DENOMINATOR.id, subgroup = Subgroup.FIRST.id).execute()
 		if (!result.isSuccessful) {
@@ -49,7 +48,7 @@ class SynchronizeLessonsUseCase @Inject constructor(
 			return@doAsync
 		}
 
-		lessons.addAll(result.body()?.flatMap { it.lessons.toList().onEach { it.day = it.day } })
+		lessons.addAll(result.body()?.flatMap { day -> day.lessons.toList().onEach { lesson -> lesson.day = day.day } })
 
 		result = webApi.getSchedule(groupId = groupId, week = Week.NUMERATOR.id, subgroup = Subgroup.SECOND.id).execute()
 		if (!result.isSuccessful) {
@@ -57,7 +56,7 @@ class SynchronizeLessonsUseCase @Inject constructor(
 			return@doAsync
 		}
 
-		lessons.addAll(result.body()?.flatMap { it.lessons.toList().onEach { it.day = it.day } })
+		lessons.addAll(result.body()?.flatMap { day -> day.lessons.toList().onEach { lesson -> lesson.day = day.day } })
 
 		result = webApi.getSchedule(groupId = groupId, week = Week.DENOMINATOR.id, subgroup = Subgroup.SECOND.id).execute()
 		if (!result.isSuccessful) {
@@ -65,7 +64,7 @@ class SynchronizeLessonsUseCase @Inject constructor(
 			return@doAsync
 		}
 
-		lessons.addAll(result.body()?.flatMap { it.lessons.toList().onEach { it.day = it.day } })
+		lessons.addAll(result.body()?.flatMap { day -> day.lessons.toList().onEach { lesson -> lesson.day = day.day } })
 
 		// endregion
 

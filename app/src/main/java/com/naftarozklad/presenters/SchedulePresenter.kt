@@ -1,8 +1,6 @@
 package com.naftarozklad.presenters
 
-import com.naftarozklad.business.LessonsUseCase
-import com.naftarozklad.business.SynchronizeCallback
-import com.naftarozklad.business.SynchronizeLessonsUseCase
+import com.naftarozklad.business.*
 import com.naftarozklad.views.interfaces.ScheduleView
 import javax.inject.Inject
 
@@ -11,7 +9,9 @@ import javax.inject.Inject
  */
 class SchedulePresenter @Inject constructor(
 		private val lessonsUseCase: LessonsUseCase,
-		private val synchronizeLessonsUseCase: SynchronizeLessonsUseCase
+		private val groupsUseCase: GroupsUseCase,
+		private val synchronizeLessonsUseCase: SynchronizeLessonsUseCase,
+		private val initCacheUseCase: InitCacheUseCase
 ) : Presenter<ScheduleView> {
 
 	lateinit var scheduleView: ScheduleView
@@ -19,12 +19,24 @@ class SchedulePresenter @Inject constructor(
 	override fun attachView(view: ScheduleView) {
 		scheduleView = view
 
-		if (lessonsUseCase.isLessonsExist(scheduleView.getGroupId())) {
-			initList()
+		if (!initCacheUseCase.isInitialized()) {
+			initCacheUseCase.initInternalRepo {
+				attachView(scheduleView)
+			}
+
 			return
 		}
 
-		synchronizeLessons()
+		scheduleView.setGroupName(groupsUseCase.getGroupById(scheduleView.getGroupId())?.name)
+
+		if (lessonsUseCase.isLessonsExist(scheduleView.getGroupId()))
+			initList()
+		else
+			synchronizeLessons()
+
+		scheduleView.setRefreshAction {
+			synchronizeLessons()
+		}
 	}
 
 	override fun detachView() {}
@@ -42,6 +54,6 @@ class SchedulePresenter @Inject constructor(
 	}
 
 	private fun initList() = with(scheduleView) {
-		setListItems(lessonsUseCase.getLessons(getGroupId(), getWeekId(), getSubgroupId()))
+		setLessons(lessonsUseCase.getLessons(getGroupId(), getWeekId(), getSubgroupId()))
 	}
 }

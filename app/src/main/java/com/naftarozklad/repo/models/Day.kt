@@ -11,5 +11,6 @@ enum class Day(val id: Int, val description: String) {
 	TUESDAY(2, resolveString(R.string.lbl_tuesday)),
 	WEDNESDAY(3, resolveString(R.string.lbl_wednesday)),
 	THURSDAY(4, resolveString(R.string.lbl_thursday)),
-	FRIDAY(5, resolveString(R.string.lbl_friday))
+	FRIDAY(5, resolveString(R.string.lbl_friday)),
+	SATURDAY(6, resolveString(R.string.lbl_saturday))
 }
