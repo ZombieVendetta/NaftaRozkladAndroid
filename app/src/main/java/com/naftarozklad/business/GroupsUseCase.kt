@@ -10,4 +10,6 @@ import javax.inject.Inject
 class GroupsUseCase @Inject constructor(private val globalCache: GlobalCache) {
 
 	fun getGroups(filterString: String): List<Group> = globalCache.cachedGroups.filter { it.name.contains(filterString, true) }
+
+	fun getGroupById(groupId: Int) = globalCache.cachedGroups.firstOrNull { group -> group.id == groupId }
 }

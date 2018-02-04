@@ -17,6 +17,7 @@ class LessonsUseCase @Inject constructor(private val globalCache: GlobalCache) {
 					.filter { it.groupId == groupId }
 					.filter { it.week == weekId || it.week == 0 }
 					.filter { it.subgroup == subgroupId || it.subgroup == 0 }
+					.sortedBy { it.period }
 					.groupBy { it.day }
 	)
 }

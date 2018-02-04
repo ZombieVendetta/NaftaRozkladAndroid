@@ -19,4 +19,8 @@ interface ScheduleView : View {
 	fun onError(errorMessage: String)
 
 	fun setLessons(lessons: Map<Int, List<Lesson>>)
+
+	fun setRefreshAction(action : () -> Unit)
+
+	fun setGroupName(name: String?)
 }

@@ -3,32 +3,30 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="90dp"
-	android:background="#66FFFFFF"
-	android:layout_margin="4dp"
 	android:orientation="horizontal">
 
 	<LinearLayout
 		android:layout_width="50dp"
 		android:layout_height="match_parent"
+		android:background="?colorPrimary"
 		android:gravity="center"
-		android:orientation="vertical"
-		android:textColor="@android:color/white">
+		android:orientation="vertical">
 
 		<TextView
 			android:id="@+id/tvLessonNumber"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@android:color/white"
-			android:textSize="16sp"
-			tools:text="1"/>
+			android:textSize="16dp"
+			tools:text="1" />
 
 		<TextView
 			android:id="@+id/tvLessonType"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@android:color/white"
-			android:textSize="16sp"
-			tools:text="лек."/>
+			android:textSize="16dp"
+			tools:text="лек." />
 	</LinearLayout>
 
 	<LinearLayout
@@ -43,22 +41,20 @@
 			android:id="@+id/tvLessonName"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/white"
+			android:textColor="@color/dark_gray_text"
 			android:textStyle="bold"
-			tools:text="Технології компонентного програмного забезпечення"/>
+			tools:text="Технології компонентного програмного забезпечення" />
 
 		<TextView
 			android:id="@+id/tvLecturer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/white"
-			tools:text="Лютак І.З."/>
+			tools:text="Лютак І.З." />
 
 		<TextView
 			android:id="@+id/tvRoom"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/white"
-			tools:text="A-11"/>
+			tools:text="A-11" />
 	</LinearLayout>
 </LinearLayout>

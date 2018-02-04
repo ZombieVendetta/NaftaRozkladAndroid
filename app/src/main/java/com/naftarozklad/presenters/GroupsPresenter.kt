@@ -21,13 +21,19 @@ class GroupsPresenter @Inject constructor(
 	override fun attachView(view: GroupsView) {
 		groupsView = view
 
-		groupsView.setTextChangedAction { initList() }
+		if (!initCacheUseCase.isInitialized()) {
+			initCacheUseCase.initInternalRepo {
+				attachView(groupsView)
+			}
+
+			return
+		}
+
+		groupsView.setTextChangedAction { setListItems() }
 		groupsView.setRefreshAction { synchronizeGroups() }
 
-		initCacheUseCase.initInternalRepo().get()
-
 		if (initCacheUseCase.isGroupsExist()) {
-			initList()
+			setListItems()
 			return
 		}
 
@@ -40,7 +46,7 @@ class GroupsPresenter @Inject constructor(
 		synchronizeGroupsUseCase.synchronizeGroups(object : SynchronizeCallback {
 			override fun onSuccess() {
 				groupsView.stopRefresh()
-				initList()
+				setListItems()
 			}
 
 			override fun onError(errorMessage: String) {
@@ -50,7 +56,7 @@ class GroupsPresenter @Inject constructor(
 		})
 	}
 
-	private fun initList() = with(groupsView) {
+	private fun setListItems() = with(groupsView) {
 		setListItems(groupsUseCase.getGroups(getFilterText()))
 	}
 }
