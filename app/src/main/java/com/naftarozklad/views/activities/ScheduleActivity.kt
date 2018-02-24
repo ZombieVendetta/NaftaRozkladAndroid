@@ -1,11 +1,11 @@
 package com.naftarozklad.views.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.*
 import android.view.animation.AlphaAnimation
 import android.widget.TextView
@@ -21,7 +21,7 @@ import com.naftarozklad.utils.resolveString
 import com.naftarozklad.views.interfaces.ScheduleView
 import kotlinx.android.synthetic.main.activity_shedule.*
 import kotlinx.android.synthetic.main.list_item_lesson.view.*
-import org.jetbrains.anko.contentView
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 /**
@@ -56,6 +56,18 @@ class ScheduleActivity : AppCompatActivity(), ScheduleView {
 			return false
 		})
 
+		btnSelectGroup.setOnClickListener {
+			startActivity<GroupsActivity>()
+		}
+
+		presenter.attachView(this)
+	}
+
+	override fun onNewIntent(intent: Intent?) {
+		super.onNewIntent(intent)
+
+		viewOverlay.alpha = 0f
+		llSettings.setContentVisibility(false, false)
 		presenter.attachView(this)
 	}
 
@@ -81,14 +93,12 @@ class ScheduleActivity : AppCompatActivity(), ScheduleView {
 		super.onBackPressed()
 	}
 
-	override fun getGroupId() = intent.getIntExtra(ScheduleView.EXTRA_GROUP_ID, 0)
-
 	override fun getSubgroupId() = if (rbFirstSubgroup.isChecked) Subgroup.FIRST.id else Subgroup.SECOND.id
 
 	override fun getWeekId() = if (rbNumerator.isChecked) Week.NUMERATOR.id else Week.DENOMINATOR.id
 
 	override fun onError(errorMessage: String) {
-		contentView?.let { Snackbar.make(it, errorMessage, Snackbar.LENGTH_LONG).show() }
+		coordinatorLayout?.let { Snackbar.make(it, errorMessage, Snackbar.LENGTH_LONG).show() }
 	}
 
 	override fun setLessons(lessons: Map<Int, List<Lesson>>) {
@@ -148,11 +158,14 @@ class ScheduleActivity : AppCompatActivity(), ScheduleView {
 		}
 	}
 
+	override fun openGroupsView() {
+		startActivity<GroupsActivity>()
+		finish()
+	}
+
 	private fun switchSettingsViewVisibility() {
 		val startValue = if (llSettings.visibility == View.VISIBLE) 1f else 0f
 		val endValue = if (llSettings.visibility == View.VISIBLE) 0f else 1f
-
-		Log.d("values", "before $startValue after $endValue")
 
 		viewOverlay.animation?.cancel()
 		viewOverlay.alpha = 1f

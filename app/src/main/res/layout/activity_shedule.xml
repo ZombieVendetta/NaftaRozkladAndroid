@@ -136,6 +136,7 @@
 			</RadioGroup>
 
 			<android.support.v7.widget.AppCompatButton
+				android:id="@+id/btnSelectGroup"
 				style="@style/Widget.AppCompat.Button.Colored"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -149,13 +150,18 @@
 		</RelativeLayout>
 	</com.naftarozklad.utils.CircularFrameLayout>
 
-	<android.support.design.widget.FloatingActionButton
-		android:id="@+id/fabSettings"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentEnd="true"
-		app:backgroundTint="@android:color/white"
-		app:srcCompat="@drawable/ic_settings_vector"
-		app:useCompatPadding="true" />
+	<android.support.design.widget.CoordinatorLayout
+		android:id="@+id/coordinatorLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/fabSettings"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom|end"
+			android:layout_margin="16dp"
+			app:backgroundTint="@android:color/white"
+			app:srcCompat="@drawable/ic_settings_vector" />
+	</android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

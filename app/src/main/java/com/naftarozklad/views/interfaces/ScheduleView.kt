@@ -6,11 +6,6 @@ import com.naftarozklad.repo.models.Lesson
  * Created by bohdan on 10/21/17
  */
 interface ScheduleView : View {
-	companion object {
-		val EXTRA_GROUP_ID = "EXTRA_GROUP_ID"
-	}
-
-	fun getGroupId(): Int
 
 	fun getSubgroupId(): Int
 
@@ -31,4 +26,6 @@ interface ScheduleView : View {
 	fun setSubgroupChangedAction(action: (subgroupId: Int) -> Unit)
 
 	fun setWeekChangedAction(action: (weekId: Int) -> Unit)
+
+	fun openGroupsView()
 }
