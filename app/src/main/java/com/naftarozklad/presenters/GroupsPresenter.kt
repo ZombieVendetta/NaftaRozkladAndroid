@@ -1,9 +1,7 @@
 package com.naftarozklad.presenters
 
-import com.naftarozklad.business.GroupsUseCase
-import com.naftarozklad.business.InitCacheUseCase
-import com.naftarozklad.business.SynchronizeCallback
-import com.naftarozklad.business.SynchronizeGroupsUseCase
+import android.text.TextUtils
+import com.naftarozklad.business.*
 import com.naftarozklad.views.interfaces.GroupsView
 import javax.inject.Inject
 
@@ -13,13 +11,16 @@ import javax.inject.Inject
 class GroupsPresenter @Inject constructor(
 		private val groupsUseCase: GroupsUseCase,
 		private val initCacheUseCase: InitCacheUseCase,
-		private val synchronizeGroupsUseCase: SynchronizeGroupsUseCase
+		private val synchronizeGroupsUseCase: SynchronizeGroupsUseCase,
+		private val sessionUseCase: SessionUseCase
 ) : Presenter<GroupsView> {
 
 	lateinit var groupsView: GroupsView
 
 	override fun attachView(view: GroupsView) {
 		groupsView = view
+
+		groupsView.setNavigationBackEnabled(!TextUtils.isEmpty(sessionUseCase.getCurrentGroupName()))
 
 		if (!initCacheUseCase.isInitialized()) {
 			initCacheUseCase.initInternalRepo {
@@ -29,6 +30,7 @@ class GroupsPresenter @Inject constructor(
 			return
 		}
 
+		groupsView.setGroupSelectedAction { groupId -> groupsUseCase.getGroupById(groupId)?.let { sessionUseCase.setCurrentGroupName(it.name) } }
 		groupsView.setTextChangedAction { setListItems() }
 		groupsView.setRefreshAction { synchronizeGroups() }
 

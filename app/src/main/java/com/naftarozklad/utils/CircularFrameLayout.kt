@@ -20,18 +20,13 @@ class CircularFrameLayout @JvmOverloads constructor(
 		context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-	init {
-		visibility = View.INVISIBLE
-	}
-
-	var animationDuration = 300L
-
 	private var animator: ValueAnimator? = null
 
+	var animationDuration = 300L
 	var circleCenterX = 0f
 	var circleCenterY = 0f
 
-	private val path = Path()
+	private var path: Path? = null
 
 	override fun dispatchDraw(canvas: Canvas?) {
 		if (canvas == null)
@@ -39,7 +34,7 @@ class CircularFrameLayout @JvmOverloads constructor(
 
 		val count = canvas.save()
 
-		canvas.clipPath(path)
+		path?.let { canvas.clipPath(it) }
 		super.dispatchDraw(canvas)
 
 		canvas.restoreToCount(count)
@@ -51,9 +46,7 @@ class CircularFrameLayout @JvmOverloads constructor(
 			return
 
 		if (!animated) {
-			path.reset()
-			path.addRect(0f, 0f, width.toFloat(), height.toFloat(), Path.Direction.CW)
-
+			path = null
 			visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
 			return
 		}
@@ -61,6 +54,8 @@ class CircularFrameLayout @JvmOverloads constructor(
 		val circleRadius = calculateCircleRadius(circleCenterX, circleCenterY)
 
 		animator?.cancel()
+
+		path = Path()
 
 		val startValue = if (visibility == View.VISIBLE) circleRadius else 0f
 		val endValue = if (visibility == View.VISIBLE) 0f else circleRadius
@@ -70,8 +65,8 @@ class CircularFrameLayout @JvmOverloads constructor(
 				.apply { interpolator = AccelerateDecelerateInterpolator() }
 				.apply {
 					addUpdateListener {
-						path.reset()
-						path.addCircle(circleCenterX, circleCenterY, it.animatedValue as Float, Path.Direction.CW)
+						path?.reset()
+						path?.addCircle(circleCenterX, circleCenterY, it.animatedValue as Float, Path.Direction.CW)
 						invalidate()
 					}
 				}
@@ -96,6 +91,8 @@ class CircularFrameLayout @JvmOverloads constructor(
 				}
 				.apply { start() }
 	}
+
+	fun isAnimating() = animator != null
 
 	private fun calculateCircleRadius(centerX: Float, centerY: Float): Float {
 		val hypotenuse = { x: Float, y: Float -> sqrt(x.pow(2) + y.pow(2)) }
