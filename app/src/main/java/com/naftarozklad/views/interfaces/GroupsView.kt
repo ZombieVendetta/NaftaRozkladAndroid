@@ -9,6 +9,8 @@ interface GroupsView : View {
 
 	fun setTextChangedAction(action: (String) -> Unit)
 
+	fun setGroupSelectedAction(action: (Int) -> Unit)
+
 	fun setListItems(groups: List<Group>)
 
 	fun getFilterText(): String
@@ -16,6 +18,8 @@ interface GroupsView : View {
 	fun setFilterText(filterText: String)
 
 	fun setRefreshAction(action: () -> Unit)
+	
+	fun setNavigationBackEnabled(enabled: Boolean)
 
 	fun stopRefresh()
 

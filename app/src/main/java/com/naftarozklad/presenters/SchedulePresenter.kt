@@ -1,5 +1,6 @@
 package com.naftarozklad.presenters
 
+import android.text.TextUtils
 import com.naftarozklad.business.*
 import com.naftarozklad.views.interfaces.ScheduleView
 import javax.inject.Inject
@@ -11,7 +12,8 @@ class SchedulePresenter @Inject constructor(
 		private val lessonsUseCase: LessonsUseCase,
 		private val groupsUseCase: GroupsUseCase,
 		private val synchronizeLessonsUseCase: SynchronizeLessonsUseCase,
-		private val initCacheUseCase: InitCacheUseCase
+		private val initCacheUseCase: InitCacheUseCase,
+		private val sessionUseCase: SessionUseCase
 ) : Presenter<ScheduleView> {
 
 	lateinit var scheduleView: ScheduleView
@@ -27,9 +29,30 @@ class SchedulePresenter @Inject constructor(
 			return
 		}
 
-		scheduleView.setGroupName(groupsUseCase.getGroupById(scheduleView.getGroupId())?.name)
+		if (TextUtils.isEmpty(sessionUseCase.getCurrentGroupName())) {
+			scheduleView.openGroupsView()
+			return
+		}
 
-		if (lessonsUseCase.isLessonsExist(scheduleView.getGroupId()))
+		scheduleView.setGroupName(sessionUseCase.getCurrentGroupName())
+		scheduleView.setSubgroupId(sessionUseCase.getCurrentSubgroupId())
+		scheduleView.setWeekId(sessionUseCase.getCurrentWeekId())
+
+		scheduleView.setSubgroupChangedAction { subgroupId ->
+			sessionUseCase.setCurrentSubgroupId(subgroupId)
+			initList()
+		}
+		scheduleView.setWeekChangedAction { weekId ->
+			sessionUseCase.setCurrentWeekId(weekId)
+			initList()
+		}
+
+		val currentGroup = getCurrentGroup()
+
+		if (currentGroup == null)
+			return
+
+		if (lessonsUseCase.isLessonsExist(currentGroup.id))
 			initList()
 		else
 			synchronizeLessons()
@@ -42,18 +65,22 @@ class SchedulePresenter @Inject constructor(
 	override fun detachView() {}
 
 	private fun synchronizeLessons() {
-		synchronizeLessonsUseCase.synchronizeLessons(scheduleView.getGroupId(), object : SynchronizeCallback {
-			override fun onSuccess() {
-				initList()
-			}
+		getCurrentGroup()?.id?.let {
+			synchronizeLessonsUseCase.synchronizeLessons(it, object : SynchronizeCallback {
+				override fun onSuccess() {
+					initList()
+				}
 
-			override fun onError(errorMessage: String) {
-				scheduleView.onError(errorMessage)
-			}
-		})
+				override fun onError(errorMessage: String) {
+					scheduleView.onError(errorMessage)
+				}
+			})
+		}
 	}
 
 	private fun initList() = with(scheduleView) {
-		setLessons(lessonsUseCase.getLessons(getGroupId(), getWeekId(), getSubgroupId()))
+		getCurrentGroup()?.id?.let { setLessons(lessonsUseCase.getLessons(it, getWeekId(), getSubgroupId())) }
 	}
+
+	private fun getCurrentGroup() = groupsUseCase.getGroupByName(sessionUseCase.getCurrentGroupName())
 }
