@@ -33,33 +33,135 @@
 		android:layout_height="wrap_content"
 		android:layout_below="@id/tabLayout" />
 
-	<android.support.design.widget.FloatingActionButton
-		android:id="@+id/fabSettings"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentEnd="true"
-		app:backgroundTint="@android:color/white"
-		app:srcCompat="@drawable/ic_settings_vector"
-		app:useCompatPadding="true" />
+	<View
+		android:id="@+id/viewOverlay"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:alpha="0"
+		android:background="#40000000" />
 
 	<com.naftarozklad.utils.CircularFrameLayout
 		android:id="@+id/llSettings"
 		android:layout_width="wrap_content"
-		android:layout_alignParentStart="true"
-		android:layout_alignParentEnd="true"
+		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:layout_height="300dp">
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentStart="true"
+		android:clickable="true"
+		android:focusable="true"
+		android:visibility="invisible"
+		app:elevation="4dp">
 
-		<LinearLayout
+		<RelativeLayout
 			android:layout_width="match_parent"
-			android:background="@color/colorAccent"
-			android:layout_height="match_parent">
-			<Button
-				android:layout_width="200dp"
-				android:text="asdasdasdasdasd"
-				android:layout_height="wrap_content" />
-		</LinearLayout>
+			android:layout_height="match_parent"
+			android:background="@android:color/white">
 
+			<RadioGroup
+				android:id="@+id/rgSegmentedGroup"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentTop="true"
+				android:layout_centerInParent="true"
+				android:layout_marginEnd="18dp"
+				android:layout_marginStart="18dp"
+				android:layout_marginTop="18dp"
+				android:background="@drawable/bg_segmented_radio_group"
+				android:elevation="2dp"
+				android:orientation="horizontal"
+				android:padding="2dp">
+
+				<RadioButton
+					android:id="@+id/rbFirstSubgroup"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:background="@drawable/bg_segmented_thumb"
+					android:button="@null"
+					android:gravity="center"
+					android:padding="12dp"
+					android:text="@string/lbl_first_subgroup"
+					android:textColor="@color/segment_text_color" />
+
+				<RadioButton
+					android:id="@+id/rbSecondSubgroup"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:background="@drawable/bg_segmented_thumb"
+					android:button="@null"
+					android:gravity="center"
+					android:padding="12dp"
+					android:text="@string/lbl_second_subgroup"
+					android:textColor="@color/segment_text_color" />
+			</RadioGroup>
+
+			<RadioGroup
+				android:id="@+id/rgSegmentedWeek"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/rgSegmentedGroup"
+				android:layout_centerInParent="true"
+				android:layout_marginEnd="18dp"
+				android:layout_marginStart="18dp"
+				android:layout_marginTop="18dp"
+				android:background="@drawable/bg_segmented_radio_group"
+				android:elevation="2dp"
+				android:orientation="horizontal"
+				android:padding="2dp">
+
+				<RadioButton
+					android:id="@+id/rbNumerator"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:background="@drawable/bg_segmented_thumb"
+					android:button="@null"
+					android:gravity="center"
+					android:padding="12dp"
+					android:text="@string/lbl_numerator"
+					android:textColor="@color/segment_text_color" />
+
+				<RadioButton
+					android:id="@+id/rbDenominator"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:background="@drawable/bg_segmented_thumb"
+					android:button="@null"
+					android:gravity="center"
+					android:padding="12dp"
+					android:text="@string/lbl_denominator"
+					android:textColor="@color/segment_text_color" />
+			</RadioGroup>
+
+			<android.support.v7.widget.AppCompatButton
+				android:id="@+id/btnSelectGroup"
+				style="@style/Widget.AppCompat.Button.Colored"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/rgSegmentedWeek"
+				android:layout_centerInParent="true"
+				android:layout_marginBottom="18dp"
+				android:layout_marginTop="18dp"
+				android:gravity="center"
+				android:text="@string/lbl_select_group"
+				android:theme="@style/ColoredButton.Primary" />
+		</RelativeLayout>
 	</com.naftarozklad.utils.CircularFrameLayout>
+
+	<android.support.design.widget.CoordinatorLayout
+		android:id="@+id/coordinatorLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/fabSettings"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom|end"
+			android:layout_margin="16dp"
+			app:backgroundTint="@android:color/white"
+			app:srcCompat="@drawable/ic_settings_vector" />
+	</android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

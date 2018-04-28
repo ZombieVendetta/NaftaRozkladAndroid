@@ -15,11 +15,11 @@ import com.naftarozklad.repo.models.Group
 import com.naftarozklad.utils.SimpleTextWatcher
 import com.naftarozklad.utils.hideKeyboard
 import com.naftarozklad.views.interfaces.GroupsView
-import com.naftarozklad.views.interfaces.ScheduleView
 import com.naftarozklad.views.lists.adapters.GroupsAdapter
 import kotlinx.android.synthetic.main.activity_groups.*
+import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.contentView
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.intentFor
 import javax.inject.Inject
 
 class GroupsActivity : AppCompatActivity(), GroupsView {
@@ -30,6 +30,7 @@ class GroupsActivity : AppCompatActivity(), GroupsView {
 	private val adapter = GroupsAdapter()
 
 	private lateinit var textChangedAction: (String) -> Unit
+	private lateinit var groupSelectedAction: (Int) -> Unit
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -48,7 +49,10 @@ class GroupsActivity : AppCompatActivity(), GroupsView {
 			}
 		})
 
-		adapter.setSelectionCallback { openScheduleActivity(it) }
+		adapter.setSelectionCallback { groupId ->
+			groupSelectedAction(groupId)
+			openScheduleActivity()
+		}
 
 		ivCloseSearch.setOnClickListener {
 			switchSearchContainerVisibility()
@@ -67,8 +71,16 @@ class GroupsActivity : AppCompatActivity(), GroupsView {
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		if (item.itemId != R.id.search)
+			return false
+
 		switchSearchContainerVisibility()
 		etSearch.requestFocus()
+		return true
+	}
+
+	override fun onSupportNavigateUp(): Boolean {
+		finish()
 		return true
 	}
 
@@ -84,8 +96,16 @@ class GroupsActivity : AppCompatActivity(), GroupsView {
 		textChangedAction = action
 	}
 
+	override fun setGroupSelectedAction(action: (Int) -> Unit) {
+		groupSelectedAction = action
+	}
+
 	override fun setRefreshAction(action: () -> Unit) {
 		swipeRefreshLayout.setOnRefreshListener(action)
+	}
+
+	override fun setNavigationBackEnabled(enabled: Boolean) {
+		supportActionBar?.setDisplayHomeAsUpEnabled(enabled)
 	}
 
 	override fun setListItems(groups: List<Group>) {
@@ -104,8 +124,9 @@ class GroupsActivity : AppCompatActivity(), GroupsView {
 		contentView?.let { Snackbar.make(it, errorMessage, Snackbar.LENGTH_LONG).show() }
 	}
 
-	private fun openScheduleActivity(groupId: Int) {
-		startActivity<ScheduleActivity>(ScheduleView.EXTRA_GROUP_ID to groupId)
+	private fun openScheduleActivity() {
+		startActivity(intentFor<ScheduleActivity>().clearTop())
+		finish()
 	}
 
 	private fun switchSearchContainerVisibility() {
