@@ -18,14 +18,14 @@ class GroupsAdapter : RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
 	private var groups: MutableList<Group> = ArrayList()
 	private lateinit var selectionCallback: (Int) -> Unit
 
-	override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): GroupViewHolder {
-		return GroupViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.list_item_group, parent, false))
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
+		return GroupViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_group, parent, false))
 	}
 
-	override fun onBindViewHolder(holder: GroupViewHolder?, position: Int) {
+	override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
 		val group = groups[position]
-		holder?.name = group.name
-		holder?.itemView?.setOnClickListener { selectionCallback(group.id) }
+		holder.name = group.name
+		holder.itemView?.setOnClickListener { selectionCallback(group.id) }
 	}
 
 	override fun getItemCount(): Int {
