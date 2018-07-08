@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	package="com.naftarozklad">
 
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -12,10 +13,15 @@
 		android:label="@string/app_name"
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
-		android:theme="@style/AppTheme">
+		android:theme="@style/AppTheme"
+		tools:ignore="GoogleAppIndexingWarning">
+
+		<meta-data android:name="firebase_crashlytics_collection_enabled" android:value="@bool/fabric_enabled" />
+
 		<activity
 			android:name=".views.activities.GroupsActivity"
 			android:screenOrientation="portrait" />
+
 		<activity
 			android:name=".views.activities.ScheduleActivity"
 			android:launchMode="singleTop"
@@ -26,6 +32,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
 	</application>
 
 </manifest>
