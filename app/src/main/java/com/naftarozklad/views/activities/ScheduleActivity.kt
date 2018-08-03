@@ -77,8 +77,13 @@ class ScheduleActivity : AppCompatActivity(), ScheduleView {
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-		refreshAction()
-		return true
+		item?.run {
+			when (itemId) {
+				R.id.navSync -> refreshAction()
+				R.id.navSettings -> startActivity<SettingsActivity>()
+				else -> return false
+			}
+		}.let { return true }
 	}
 
 	override fun onBackPressed() {
