@@ -2,6 +2,7 @@ package com.naftarozklad.presenters
 
 import android.text.TextUtils
 import com.naftarozklad.business.*
+import com.naftarozklad.utils.getCurrentWeek
 import com.naftarozklad.views.interfaces.ScheduleView
 import javax.inject.Inject
 
@@ -35,22 +36,8 @@ class SchedulePresenter @Inject constructor(
 		}
 
 		scheduleView.setGroupName(sessionUseCase.getCurrentGroupName())
-		scheduleView.setSubgroupId(sessionUseCase.getCurrentSubgroupId())
-		scheduleView.setWeekId(sessionUseCase.getCurrentWeekId())
 
-		scheduleView.setSubgroupChangedAction { subgroupId ->
-			sessionUseCase.setCurrentSubgroupId(subgroupId)
-			initList()
-		}
-		scheduleView.setWeekChangedAction { weekId ->
-			sessionUseCase.setCurrentWeekId(weekId)
-			initList()
-		}
-
-		val currentGroup = getCurrentGroup()
-
-		if (currentGroup == null)
-			return
+		val currentGroup = getCurrentGroup() ?: return
 
 		if (lessonsUseCase.isLessonsExist(currentGroup.id))
 			initList()
@@ -79,7 +66,7 @@ class SchedulePresenter @Inject constructor(
 	}
 
 	private fun initList() = with(scheduleView) {
-		getCurrentGroup()?.id?.let { setLessons(lessonsUseCase.getLessons(it, getWeekId(), getSubgroupId())) }
+		getCurrentGroup()?.id?.let { setLessons(lessonsUseCase.getLessons(it, getCurrentWeek().id, sessionUseCase.getCurrentSubgroup().id)) }
 	}
 
 	private fun getCurrentGroup() = groupsUseCase.getGroupByName(sessionUseCase.getCurrentGroupName())

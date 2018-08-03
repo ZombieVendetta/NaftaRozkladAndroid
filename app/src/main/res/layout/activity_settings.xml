@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="0dp"
+		android:layout_height="?actionBarSize"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<com.naftarozklad.utils.ShadowView
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+	<android.support.v7.widget.AppCompatImageView
+		android:id="@+id/ivSwapWeeks"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		app:layout_constraintBottom_toBottomOf="@+id/tvChangeWeeksDescription"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/tvChangeWeeks"
+		app:srcCompat="@drawable/ic_swap_vertical_vector" />
+
+	<TextView
+		android:id="@+id/tvChangeWeeks"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:text="@string/lbl_swap_weeks"
+		android:textColor="@color/textColorDark"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintStart_toEndOf="@id/ivSwapWeeks"
+		app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+	<TextView
+		android:id="@+id/tvChangeWeeksDescription"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:text="@string/lbl_swap_weeks_description"
+		android:textColor="@color/textColor"
+		android:textSize="14sp"
+		app:layout_constraintEnd_toStartOf="@+id/switchSwapWeeks"
+		app:layout_constraintStart_toEndOf="@id/ivSwapWeeks"
+		app:layout_constraintTop_toBottomOf="@id/tvChangeWeeks" />
+
+	<android.support.v7.widget.SwitchCompat
+		android:id="@+id/switchSwapWeeks"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		app:layout_constraintBottom_toBottomOf="@id/tvChangeWeeksDescription"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/tvChangeWeeks" />
+
+	<android.support.v7.widget.AppCompatImageView
+		android:id="@+id/ivSubgroup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/tvSubgroup"
+		app:layout_constraintTop_toTopOf="@+id/tvSubgroup"
+		app:srcCompat="@drawable/ic_subgroup_vector" />
+
+	<TextView
+		android:id="@+id/tvSubgroup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:text="@string/lbl_subgroup"
+		android:textColor="@color/textColorDark"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintStart_toEndOf="@id/ivSubgroup"
+		app:layout_constraintTop_toBottomOf="@id/tvChangeWeeksDescription" />
+
+	<android.support.v7.widget.AppCompatSpinner
+		android:id="@+id/spinnerSubgroup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		app:layout_constraintBottom_toBottomOf="@id/tvSubgroup"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/tvSubgroup" />
+
+	<android.support.v7.widget.AppCompatButton
+		android:id="@+id/btnSelectGroup"
+		style="@style/Widget.AppCompat.Button.Colored"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="12dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="12dp"
+		android:stateListAnimator="@null"
+		android:text="@string/lbl_select_group"
+		android:theme="@style/ColoredButton"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tvSubgroup" />
+
+</android.support.constraint.ConstraintLayout>

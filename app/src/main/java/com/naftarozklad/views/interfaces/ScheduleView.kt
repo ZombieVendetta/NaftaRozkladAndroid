@@ -7,10 +7,6 @@ import com.naftarozklad.repo.models.Lesson
  */
 interface ScheduleView : View {
 
-	fun getSubgroupId(): Int
-
-	fun getWeekId(): Int
-
 	fun onError(errorMessage: String)
 
 	fun setLessons(lessons: Map<Int, List<Lesson>>)
@@ -18,14 +14,6 @@ interface ScheduleView : View {
 	fun setRefreshAction(action : () -> Unit)
 
 	fun setGroupName(name: String?)
-
-	fun setSubgroupId(subgroupId: Int)
-
-	fun setWeekId(weekId: Int)
-
-	fun setSubgroupChangedAction(action: (subgroupId: Int) -> Unit)
-
-	fun setWeekChangedAction(action: (weekId: Int) -> Unit)
 
 	fun openGroupsView()
 }

@@ -1,14 +1,13 @@
 package com.naftarozklad.business
 
+import com.naftarozklad.repo.models.Subgroup
 import com.naftarozklad.repo.preferences.SharedPreferenceManager
 import javax.inject.Inject
 
 /**
  * Created by Bohdan on 05.02.2018
  */
-class SessionUseCase @Inject constructor(
-		private val sharedPreferenceManager: SharedPreferenceManager
-) {
+class SessionUseCase @Inject constructor(private val sharedPreferenceManager: SharedPreferenceManager) {
 
 	fun getCurrentGroupName() = sharedPreferenceManager.currentGroupName
 
@@ -16,15 +15,11 @@ class SessionUseCase @Inject constructor(
 		sharedPreferenceManager.currentGroupName = groupName
 	}
 
-	fun getCurrentSubgroupId() = sharedPreferenceManager.currentSubgroupId
+	fun getSubgroups() = arrayListOf(Subgroup.FIRST, Subgroup.SECOND)
 
-	fun setCurrentSubgroupId(subgroupId: Int) {
+	fun getCurrentSubgroup() = Subgroup.values().first { it.id == sharedPreferenceManager.currentSubgroupId }
+
+	fun setCurrentSubgroup(subgroupId: Int) {
 		sharedPreferenceManager.currentSubgroupId = subgroupId
-	}
-
-	fun getCurrentWeekId() = sharedPreferenceManager.currentWeekId
-
-	fun setCurrentWeekId(weekId: Int) {
-		sharedPreferenceManager.currentWeekId = weekId
 	}
 }

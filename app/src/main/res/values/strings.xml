@@ -2,12 +2,14 @@
 	<string name="app_name">NaftaRozklad</string>
 
 	<string name="lbl_synchronize">Синхронізувати</string>
-	
+	<string name="lbl_settings">Налаштування</string>
+
 	<string name="lbl_numerator">Чисельник</string>
 	<string name="lbl_denominator">Знаменник</string>
 
-	<string name="lbl_first_subgroup">Перша Підгрупа</string>
-	<string name="lbl_second_subgroup">Друга Підгрупа</string>
+	<string name="lbl_subgroup">Підгрупа</string>
+	<string name="lbl_first_subgroup">Перша</string>
+	<string name="lbl_second_subgroup">Друга</string>
 
 	<string name="lbl_enter_group_name">Введіть назву групи</string>
 	<string name="lbl_search_title">Пошук</string>
@@ -28,4 +30,8 @@
 	<string name="lbl_unknown_group">Невідома Група</string>
 
 	<string name="lbl_select_group">Вибрати Групу</string>
+	<string name="lbl_select_group_">Виберіть Групу</string>
+
+	<string name="lbl_swap_weeks">Поміняти тижні</string>
+	<string name="lbl_swap_weeks_description">Поміняти місцями парний та непарний тижні</string>
 </resources>
